@@ -14,6 +14,7 @@ if(ARGOS_BUILD_FOR_SIMULATOR)
       ReferenceModel2Dot2.h
       ReferenceModel2Dot3.h
       ReferenceModel3Dot0.h
+      ReferenceModel3DotS.hpp
 	)
 
 	# Sources
@@ -27,6 +28,7 @@ if(ARGOS_BUILD_FOR_SIMULATOR)
       ReferenceModel2Dot2.cpp
       ReferenceModel2Dot3.cpp
       ReferenceModel3Dot0.cpp
+      ReferenceModel3DotS.cpp
 	)
 else()
 endif(ARGOS_BUILD_FOR_SIMULATOR)
