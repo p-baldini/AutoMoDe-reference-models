@@ -35,7 +35,7 @@ void ReferenceModel3DotS::Reset() {
 /***********************************************/
 /***********************************************/
 
-CCI_EPuckProximitySensor::TReadings ReferenceModel3DotS::GetProximityInput() {
+CCI_EPuckProximitySensor::TReadings ReferenceModel3DotS::GetProximityInput() const {
     return m_sProximityInput;
 }
 
@@ -70,7 +70,7 @@ void ReferenceModel3DotS::SetGroundInput(CCI_EPuckGroundSensor::SReadings s_grou
 /***********************************************/
 /***********************************************/
 
-UInt8 ReferenceModel3DotS::GetMessageToSend() {
+const UInt8 ReferenceModel3DotS::GetMessageToSend() const {
     return m_cMessage;
 }
 

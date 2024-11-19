@@ -33,7 +33,7 @@ class ReferenceModel3DotS : public EpuckDAO {
          * 
          * @return A vector of 24 proximity values and directions as perceived by the robot.
          */
-        CCI_EPuckProximitySensor::TReadings GetProximityInput();
+        CCI_EPuckProximitySensor::TReadings GetProximityInput() const;
 
         /**
          * Not implemented. Calling the method will cause an argos exception.
@@ -100,7 +100,7 @@ class ReferenceModel3DotS : public EpuckDAO {
          * 
          * @return The byte to be sent with the RAB.
          */
-        UInt8 GetMessageToSend();
+        const UInt8 GetMessageToSend() const;
 
         /**
          * The set of messages (bytes) received through the Range and Bearing.
