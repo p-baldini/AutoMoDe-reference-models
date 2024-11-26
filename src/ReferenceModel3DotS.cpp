@@ -17,6 +17,7 @@ ReferenceModel3DotS::ReferenceModel3DotS() {
     m_fMaxVelocity = 12;
     m_fLeftWheelVelocity = 0;
     m_fRightWheelVelocity = 0;
+    m_pcRabMessageBuffer.SetTimeLife(0);
 }
 
 /***********************************************/
