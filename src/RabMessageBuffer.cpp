@@ -1,5 +1,7 @@
 #include "RabMessageBuffer.h"
 
+#include <algorithm>
+
 namespace argos {
 
   /****************************************/
@@ -25,16 +27,16 @@ namespace argos {
   /****************************************/
 
   void RabMessageBuffer::Update() {
-    if (m_unCurrentTime >= m_unMaxTimeToLive) {
-      UInt32 i = 0;
-      while (i < m_vecBufferElements.size()) {
-        if (m_vecBufferElements.at(i).second < (m_unCurrentTime - m_unMaxTimeToLive)) {
-          m_vecBufferElements.erase(m_vecBufferElements.begin() + i);
-        } else {
-          i += 1;
-        }
-      }
-    }
+    // create a function which returns true if the message is too old and shall be removed
+    auto IsOld = [this](auto e){ return e.second < m_unCurrentTime - m_unMaxTimeToLive; };
+
+    // iterate all the messages to find the too old ones to remove
+    auto end = std::remove_if(m_vecBufferElements.begin(), m_vecBufferElements.end(), IsOld);
+
+    // remove the too old messages from the vector
+    m_vecBufferElements.erase(end, m_vecBufferElements.end());
+
+    // increment the passed time
     m_unCurrentTime += 1;
   }
 
@@ -50,10 +52,11 @@ namespace argos {
 
   std::vector<CCI_EPuckRangeAndBearingSensor::SReceivedPacket*> RabMessageBuffer::GetMessages(){
     std::vector<CCI_EPuckRangeAndBearingSensor::SReceivedPacket*> vecRabMessages;
-    std::vector<std::pair<CCI_EPuckRangeAndBearingSensor::SReceivedPacket, UInt32> >::iterator it;
-    for (it = m_vecBufferElements.begin(); it != m_vecBufferElements.end(); it++) {
-      vecRabMessages.push_back(&(*it).first);
-    }
+    std::transform(
+      m_vecBufferElements.begin(), m_vecBufferElements.end(),
+      std::back_inserter(vecRabMessages),
+      [](auto& o){ return &(o.first); }
+    );
     return vecRabMessages;
   }
 
@@ -64,5 +67,4 @@ namespace argos {
     m_vecBufferElements.clear();
     m_unCurrentTime = 0;
   }
-
 }
