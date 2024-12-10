@@ -230,6 +230,9 @@ class ReferenceModel3DotS : public EpuckDAO {
                                                                         ///< variable.
         RabMessageBuffer m_pcRabMessageBuffer;                          ///< Pointer to the RAB
                                                                         ///< messages buffer.
+        Real m_fDistance;                                               ///< The maximum distance
+                                                                        ///< the robot can perceive
+                                                                        ///< colors.
         UInt8 m_cMessage;                                               ///< The message to
                                                                         ///< broadcast with the
                                                                         ///< RAB.

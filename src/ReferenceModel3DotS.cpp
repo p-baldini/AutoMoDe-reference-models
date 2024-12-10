@@ -18,6 +18,7 @@ ReferenceModel3DotS::ReferenceModel3DotS() {
     m_fLeftWheelVelocity = 0;
     m_fRightWheelVelocity = 0;
     m_pcRabMessageBuffer.SetTimeLife(0);
+    m_fDistance = 25;
 }
 
 /***********************************************/
@@ -125,6 +126,15 @@ void ReferenceModel3DotS::SetCameraInput(
     CCI_EPuckOmnidirectionalCameraSensor::SReadings s_cam_input
 ) {
     m_sCameraInput = s_cam_input;
+
+    // remove color blobs outside the selected perception range
+    auto end = std::remove_if(
+        m_sCameraInput.BlobList.begin(),
+        m_sCameraInput.BlobList.end(),
+        [this](auto o){ return o->Distance > m_fDistance; }
+    );
+    m_sCameraInput.BlobList.erase(end, m_sCameraInput.BlobList.end());
+    m_sCameraInput.Counter = m_sCameraInput.BlobList.size();
 }
 
 /***********************************************/
