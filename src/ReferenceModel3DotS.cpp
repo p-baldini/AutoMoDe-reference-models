@@ -18,7 +18,7 @@ ReferenceModel3DotS::ReferenceModel3DotS() {
     m_fLeftWheelVelocity = 0;
     m_fRightWheelVelocity = 0;
     m_pcRabMessageBuffer.SetTimeLife(0);
-    m_fDistance = 25;
+    m_fDistance = 70;
 }
 
 /***********************************************/
