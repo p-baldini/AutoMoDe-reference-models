@@ -233,6 +233,9 @@ class ReferenceModel3DotS : public EpuckDAO {
         Real m_fDistance;                                               ///< The maximum distance
                                                                         ///< the robot can perceive
                                                                         ///< colors.
+        Real m_fRABRange;                                               ///< The maximum distance
+                                                                        ///< for a message to be
+                                                                        ///< kept.
         UInt8 m_cMessage;                                               ///< The message to
                                                                         ///< broadcast with the
                                                                         ///< RAB.

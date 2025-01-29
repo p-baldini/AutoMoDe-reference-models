@@ -19,6 +19,7 @@ ReferenceModel3DotS::ReferenceModel3DotS() {
     m_fRightWheelVelocity = 0;
     m_pcRabMessageBuffer.SetTimeLife(0);
     m_fDistance = 70;
+    m_fRABRange = 10;
 }
 
 /***********************************************/
@@ -87,18 +88,16 @@ ReferenceModel3DotS::GetRangeAndBearingMessages() {
 void ReferenceModel3DotS::SetRangeAndBearingMessages(
     CCI_EPuckRangeAndBearingSensor::TPackets s_packets
 ) {
+    // create a map where to save a single message to keep for each specific sender
     std::map<UInt32, CCI_EPuckRangeAndBearingSensor::SReceivedPacket*> mapRemainingMessages;
+
     for (auto& it : s_packets) {
-        if (it->Data[0] != m_unRobotIdentifier) {
-            if (mapRemainingMessages.find(it->Data[0]) != mapRemainingMessages.end()) {  // If ID not in map, add message.
-                mapRemainingMessages[it->Data[0]] = it;
-            }
-            else
-            if (it->Bearing != CRadians::ZERO){  // If ID there, overwrite only if the message is valid (correct range and bearing information)
-                mapRemainingMessages[it->Data[0]] = it;
-            }
+        // if the sender is max 10 cms far and it has different ID of this robot, keep the message
+        if (it->Range < m_fRABRange && it->Data[0] != m_unRobotIdentifier) {
+            mapRemainingMessages[it->Data[0]] = it;
         }
     }
+
     for (auto& it : mapRemainingMessages) {
         m_pcRabMessageBuffer.AddMessage(it.second);
     }
