@@ -31,7 +31,7 @@ class ReferenceModel3DotS : public EpuckDAO {
          * Return the proximity values perceived by the robot. For each sensor return the angle
          * according to the robot and the intensity of the perceived signal.
          * 
-         * @return A vector of 24 proximity values and directions as perceived by the robot.
+         * @return A vector of 8 proximity values and directions as perceived by the robot.
          */
         CCI_EPuckProximitySensor::TReadings GetProximityInput() const;
 
@@ -45,7 +45,7 @@ class ReferenceModel3DotS : public EpuckDAO {
         /**
          * Set the proximity reading of the robot.
          * 
-         * @param[in] s_prox_input The vector of 24 proximity values and angles.
+         * @param[in] s_prox_input The vector of 8 proximity values and angles.
          */
         void SetProximityInput(CCI_EPuckProximitySensor::TReadings s_prox_input);
 
